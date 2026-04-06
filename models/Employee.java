@@ -1,114 +1,148 @@
 package models;
-import exceptions.InvalidEmployeeException; 
 
+import exceptions.InvalidEmployeeException;
 
 public class Employee {
 
-    private String employeeName ;
-    private String employeeId ;
+    private String employeeId;
+    private String employeeName;
     private String mobileNumber;
-    private String departmentName ;
-    private int employeeAge;  
+    private String departmentName;
+    private int employeeAge;
 
-    public Employee(String employeeId ,  String employeeName , String departmentName , String mobileNumber , int employeeAge) throws InvalidEmployeeException{
-
-         this.employeeId = employeeId ;
-        this.departmentName = departmentName ;
-        this.employeeName = employeeName ;
-        this.mobileNumber = mobileNumber ;
-        this.employeeAge = employeeAge ;
-
-       
-
-         private void validateEmployeeName(String employeeName)throws IvalidEmployeeException {
-            if(employeeName == null || employeeName.trim().isEmpty()){   //trims extra spaces and is not empty
-            throw new InvalidEmployeException("Employee name cannot be empty");
-        }
+    public Employee(String employeeId, String employeeName, String departmentName, 
+                    String mobileNumber, int employeeAge) throws InvalidEmployeeException {
         
-         }
-    
-        private void validateEmployeeId(String employeeId)throws InvalidEmployeeException{
-          if(employeeId == null || employeeId.trim().isEmpty()){
-            throw new InvalidEmployeeException("Employee ID cannot be empty");
-        }
-         
+        validateEmployeeId(employeeId);
+        validateEmployeeName(employeeName);
+        validateMobileNumber(mobileNumber);
+        validateDepartmentName(departmentName);
+        validateAge(employeeAge);
+
+        this.employeeId = employeeId;
+        this.employeeName = employeeName;  
+        this.mobileNumber = mobileNumber;
+        this.departmentName = departmentName;
+        this.employeeAge = employeeAge;
     }
-        private void validateMobileNumber(String mobileNumber)throws InvalidEmployeeException{
-        if(mobileNumber == null || mobileNumber.trim().isEmpty()){
-            throw new InvalidEmployeeException("Mobile number name cannot be empty");
-        }
-    }
-         
-      private void validateDepartmentName(String departmentName) throws InvalidEmployeeException{
-        if(departmentName == null || departmentName.trim().isEmpty()){
-            throw new IllegalArgumentException("Department name cannot be empty");
-        }
-    }
- 
-    private void vaidateAge(int employeeAge) throws InvalidEmployeeException{
-        if(employeeAge < 20 || employeeAge > 60){
-             throw new InvalidEmployeeException("Age must be between 20 to 60");
+
+    // VALIDATION METHODS
+    private void validateEmployeeId(String id) throws InvalidEmployeeException {
+        if(id == null || id.trim().isEmpty()){
+            throw new InvalidEmployeeException("employeeId", "Employee ID cannot be empty");
         }
     }
 
+    private void validateEmployeeName(String name) throws InvalidEmployeeException {
+        if(name == null || name.trim().isEmpty()){
+            throw new InvalidEmployeeException("employeeName", "Employee name cannot be empty");
+        }
     }
 
+    private void validateMobileNumber(String mobile) throws InvalidEmployeeException {
+        if(mobile == null || mobile.trim().isEmpty()){
+            throw new InvalidEmployeeException("mobileNumber", "Mobile number cannot be empty");
+        }
+    }
+
+    private void validateDepartmentName(String dept) throws InvalidEmployeeException {
+        if(dept == null || dept.trim().isEmpty()){
+            throw new InvalidEmployeeException("departmentName", "Department name cannot be empty");
+        }
+    }
+
+    private void validateAge(int age) throws InvalidEmployeeException {
+        if(age < 20 || age > 60){
+            throw new InvalidEmployeeException("age", "Age must be between 20 to 60");
+        }
+    }
+
+    // GETTERS
     public String getEmployeeName(){
-        return employeeName ;
+        return employeeName;
     }
 
     public String getEmployeeId(){
-        return employeeId;
+        return employeeId;  
     }
 
-    public String getMobileNumber(){
-        return mobileNumber ;
+    public String getMobileNumber(){ 
+        return mobileNumber;
     }
 
     public String getDepartmentName(){
-        return departmentName ;
+        return departmentName;
     }
 
     public int getEmployeeAge(){
         return employeeAge;
     }
 
-    public void getDetails(){
-        System.out.println("==============Employee Details================");
-        System.out.println("Employee's Name: " + employeeName);
-        System.out.println("Employee's Id: " + employeeId);
-        System.out.println("Employee's Department: " + departmentName);
-        System.out.println("Employee's Mobile Number: " + mobileNumber);
-        System.out.println("Employe's Age: " + employeeAge);
-        System.out.println("================================================");
+    // SETTERS WITH VALIDATION
+    public void setEmployeeName(String name) throws InvalidEmployeeException {
+        validateEmployeeName(name);
+        this.employeeName = name;
     }
 
-    @Override 
+    public void setEmployeeId(String id) throws InvalidEmployeeException{
+
+        validateEmployeeId(id) ;
+        this.employeeId = id ;
+    }
+
+    public void setMobileNumber(String mobile) throws InvalidEmployeeException {
+        validateMobileNumber(mobile);
+        this.mobileNumber = mobile;
+    }
+
+    public void setDepartmentName(String dept) throws InvalidEmployeeException {
+        validateDepartmentName(dept);
+        this.departmentName = dept;
+    }
+
+    public void setEmployeeAge(int age) throws InvalidEmployeeException {
+        validateAge(age);
+        this.employeeAge = age;
+    }
+
+    // DISPLAY METHOD
+    public void displayDetails(){
+        System.out.println("========== EMPLOYEE DETAILS ==========");
+        System.out.println("Employee ID: " + employeeId);
+        System.out.println("Employee Name: " + employeeName);
+        System.out.println("Department: " + departmentName);
+        System.out.println("Mobile Number: " + mobileNumber);
+        System.out.println("Age: " + employeeAge);
+        System.out.println("=====================================");
+    }
+
+    // toString() METHOD
+    @Override
     public String toString(){
-        return "Member{" +
-                "EmployeeId='" + employeeId + '\'' +
-                ", Employeename='" + employeeName + '\'' +
-                ", Mobile Number='" + mobileNumber + '\'' +
-                ", Department=" + departmentName +
-                '}' ;
+        return "Employee{" +
+                "employeeId='" + employeeId + '\'' +
+                ", employeeName='" + employeeName + '\'' +
+                ", mobileNumber='" + mobileNumber + '\'' +
+                ", departmentName='" + departmentName + '\'' +
+                ", employeeAge=" + employeeAge +
+                '}';
     }
 
-      @Override
-     public boolean equals(Object o){
- 
-        if(this == o) return true ;  // exact same object 
+    // equals() 
+    @Override
+    public boolean equals(Object o){
+        if(this == o) return true;  
+        if(o == null || getClass() != o.getClass()) return false;
+        
+        Employee employee = (Employee) o;  
+        
+        return employeeId.equals(employee.employeeId);
+    }
 
-        if(o == null || getClass() != o.getClass()) return false ;  // other object is null or of same class
-
-        Employee employee = (Employee)o ;
-
-        return employeeId.equals(employee.employeeId) ; //comparing using employeId
-
-     }
-
-     @Override
-     public int hashCode(){
-        return employeeId.hashCode() ;
-     }
-
+    // hashCode() METHOD
+    @Override
+    public int hashCode(){
+        return employeeId.hashCode();
+    }
 }
+
