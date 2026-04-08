@@ -9,5 +9,8 @@ public class InvalidSalaryException extends Exception {
         super(message);
     }
 
-    
-}
+    public InvalidSalaryException(String message , Throwable cause){
+       super(message , cause);
+    }
+
+    }
