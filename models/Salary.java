@@ -7,19 +7,23 @@ public class Salary {
     private double bonus;
     private double tax;
     private double deductions;
+    private double gross;
 
     
-    public Salary(double baseSalary , double bonus , double tax , double deductions , double gross)throws InvalidSalaryException{
+    public Salary(double baseSalary , double bonus  , double deductions )throws InvalidSalaryException{
        
         validateBaseSalary(baseSalary);
         validateBonus(bonus);
         validateDeductions(deductions);
-        validateNetSalary( gross , deductions);
+       
 
         this.baseSalary = baseSalary ;
-        this.bonus= bonus;
-        this.tax = calculateTax();
+        this.bonus= bonus;  
         this.deductions = deductions ;
+
+        this.tax = calculateTax();
+        this.gross = calculateGrossSalary();
+       
     }
 
         private void validateBaseSalary(double salary) throws InvalidSalaryException{
@@ -53,17 +57,12 @@ public class Salary {
             if(deductions < 0){
                 throw new InvalidSalaryException("Deductions cannot be negative");
             }
-
-            if(deductions > calculateGrossSalary()){
-                throw new InvalidSalaryException("Deductions shouldn't exceed gross salary");
-            }
         }
 
-        private void validateNetSalary(double gross , double deductions)throws InvalidSalaryException{
- 
-            if(gross - deductions < 0){
-                throw new InvalidSalaryException("Net salary cannot be negative");
-            }
+        private void validateNetSalary(double gross , double deductions) throws InvalidSalaryException{
+          if(gross - deductions < 0){
+        throw new InvalidSalaryException("Net salary cannot be negative");
+    }
         }
   
     //getter methods
@@ -79,8 +78,12 @@ public class Salary {
         return deductions;
     }
 
-    public double getTax(){
-        return tax ;
+    public double getTax() throws InvalidSalaryException{
+        return calculateTax() ;
+    }
+
+    public double getGrossSalary() throws InvalidSalaryException{
+        return calculateGrossSalary() ;
     }
 
     //setter validation methods
@@ -106,6 +109,7 @@ public class Salary {
     //calculate methods
 
     public double calculateGrossSalary()throws InvalidSalaryException{
+
         if(baseSalary ==0 ){
             throw new InvalidSalaryException("Base salary not set");
         }
@@ -120,12 +124,18 @@ public class Salary {
     }
 
     public double calculateNetSalary()throws InvalidSalaryException{
-        double gross = calculateGrossSalary();
+        validateNetSalary(this.gross , deductions);
+       
         double netSalary = gross - tax - deductions ;
+         if(deductions > gross){
+                throw new InvalidSalaryException("Deductions shouldn't exceed gross salary");
+            }
 
         if(netSalary < 0 ){
-            throw new InvalidSalaryException("Net salary cannot be negtive");
+            throw new InvalidSalaryException("Net salary cannot be negative");
         }
         return netSalary ;
     }
 }
+
+
