@@ -115,9 +115,9 @@ public class Employee {
         System.out.println("Age: " + employeeAge);
         System.out.println("=====================================");
     }
-
-    // toString() METHOD
-    @Override
+  
+    // toString() METHOD 
+    @Override 
     public String toString(){
         return "Employee{" +
                 "employeeId='" + employeeId + '\'' +
@@ -128,7 +128,7 @@ public class Employee {
                 '}';
     }
 
-    // equals() 
+    // equals()  //  prevent 2 same employee with same info to be written
     @Override
     public boolean equals(Object o){
         if(this == o) return true;  
@@ -139,7 +139,7 @@ public class Employee {
         return employeeId.equals(employee.employeeId);
     }
 
-    // hashCode() METHOD
+    // hashCode() METHOD 
     @Override
     public int hashCode(){
         return employeeId.hashCode();
