@@ -106,7 +106,7 @@ public class Employee {
     }
 
     // DISPLAY METHOD
-    public void displayDetails(){
+    public void displayEmployeeDetails(){
         System.out.println("========== EMPLOYEE DETAILS ==========");
         System.out.println("Employee ID: " + employeeId);
         System.out.println("Employee Name: " + employeeName);
